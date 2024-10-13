@@ -10,46 +10,33 @@ const ul = document.getElementById("authors");
 const storage = readLocalStorage("random users");
 console.log(storage !== null);
 
-call(url)
-  .then((users) => format(users))
-  .then((mapped) => console.log(mapped))
-  .catch((err) => {});
+if (storage === null) {
+  call(url)
+    .then((users) => format(users))
+    .then((users) => {
+      if (users) {
+        const stringified = JSON.stringify(users);
+        setLocalStorage("random users", stringified);
+      }
+    })
+    .catch((err) => {
+      alert("Ha ocurrido un error");
+      console.error(err);
+    });
+}
 
-// fetch(url)
-//   .then((response) => response.json())
-//   .then(function (data) {
-//     let authors = data.results;
+const storaged = readLocalStorage("random users");
+const jsonList = JSON.parse(storaged);
 
-//     let list = authors.map(function (author) {
-//       return {
-//         first: author.name.first,
-//         last: author.name.last,
-//         picture: author.picture.medium,
-//       };
-//     });
+jsonList.map(function (user) {
+  let li = createNode("li");
+  let img = createNode("img");
+  let span = createNode("span");
 
-//     return JSON.stringify(list);
-//   })
-//   .then((list) => setLocalStorage("random users", list))
-//   .then(() => {
-//     const store = readLocalStorage("random users");
+  img.src = user.picture;
+  span.innerHTML = `${user.last} ${user.first}`;
 
-//     const jsonList = JSON.parse(store);
-
-//     jsonList.map(function (user) {
-//       let li = createNode("li");
-//       let img = createNode("img");
-//       let span = createNode("span");
-
-//       img.src = user.picture;
-//       span.innerHTML = `${user.last} ${user.first}`;
-
-//       append(li, img);
-//       append(li, span);
-//       append(ul, li);
-//     });
-//   })
-//   .catch((err) => {
-//     alert("error");
-//     console.error("error", err);
-//   });
+  append(li, img);
+  append(li, span);
+  append(ul, li);
+});
