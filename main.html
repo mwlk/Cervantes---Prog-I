@@ -8,10 +8,55 @@
     <title>Institucion Cervantes</title>
     <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Styles ---->
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 
 <body>
-    <div id="main" class="container mt-4"></div>
+    <div id="layout" class="container mt-4">
+        <section>
+            <h1 class="text-center">Institucion Cervantes</h1>
+            <h5 class="text-center">Listado de Empleados</h5>
+        </section>
+
+        <section>
+            <div class="row text-center mt-5" id="btn_group">
+                <div class="col">
+                    <button type="button" id="btn_group_add" class="btn btn-primary w-100 mb-3">Agregar</button>
+                </div>
+                <div class="col">
+                    <button type="button" id="btn_group_list" class="btn btn-light w-100 mb-3">Listar</button>
+                </div>
+                <div class="col">
+                    <button type="button" id="btn_group_see_statistics" class="btn btn-dark w-100 mb-3">Calcular
+                        Estadísticas</button>
+                </div>
+                <div class="col">
+                    <button type="button" id="btn_group_clean" class="btn btn-danger w-100 mb-3">Vaciar</button>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="statistics">
+            <div class="alert alert-dark" role="alert" id="statistic_alert">
+                <span id="statistic_result"></span>
+            </div>
+        </section>
+
+
+        <section>
+            <div class="mt-5">
+                <div class="col-6">
+                    <div id="form_new_employee"></div>
+                </div>
+                <div class="col-6 offset-md-6 text-center">
+                    <div id="main"></div>
+                </div>
+            </div>
+        </section>
+
+    </div>
 </body>
 
 </html>

@@ -18,7 +18,14 @@ export function printTable(container, list) {
 
   let index = 1;
 
-  let headers = ["#", "Nombre Completo", "Foto", "Acciones"];
+  let headers = [
+    "#",
+    "Foto",
+    "Nombre Completo",
+    "Valor Hora",
+    "Horas Trabajadas",
+    "Acciones",
+  ];
 
   headers.forEach((text) => {
     let th = createNode("th");
@@ -37,9 +44,6 @@ export function printTable(container, list) {
     let indexCell = createNode("td");
     indexCell.innerHTML = index++;
 
-    let fullNameCell = createNode("td");
-    fullNameCell.innerHTML = `${data.last}, ${data.first}`;
-
     let pictureCell = createNode("td");
     pictureCell.classList.add("text-center");
 
@@ -48,19 +52,40 @@ export function printTable(container, list) {
     img.src = data.picture;
     append(pictureCell, img);
 
+    let fullNameCell = createNode("td");
+    fullNameCell.innerHTML = `${data.last}, ${data.first}`;
+
     let actionsCell = createNode("td");
-    actionsCell.classList.add("text-center");
+    actionsCell.classList.add(
+      "d-flex",
+      "flex-column",
+      "justify-content-center",
+      "align-items-center"
+    );
+
+    let hourValueCell = createNode("td");
+    hourValueCell.innerHTML = data.hourValue;
+
+    let hoursWorkedCell = createNode("td");
+    hoursWorkedCell.innerHTML = data.hoursWorked;
+
     // Create action buttons
     let editButton = createNode("button");
     editButton.innerHTML = "Editar";
-    editButton.classList.add("btn", "btn-primary", "btn-sm", "me-2");
+    editButton.classList.add(
+      "btn",
+      "btn-outline-primary",
+      "btn-sm",
+      "mb-3",
+      "w-100"
+    );
     editButton.onclick = function () {
       alert(`Editar ${data.first} ${data.last}`);
     };
 
     let deleteButton = createNode("button");
     deleteButton.innerHTML = "Eliminar";
-    deleteButton.classList.add("btn", "btn-danger", "btn-sm");
+    deleteButton.classList.add("btn", "btn-outline-danger", "btn-sm", "w-100");
     deleteButton.onclick = function () {
       alert(`Eliminar Usuario: ${data.id}?`);
     };
@@ -70,8 +95,10 @@ export function printTable(container, list) {
     append(actionsCell, deleteButton);
 
     append(tr, indexCell);
-    append(tr, fullNameCell);
     append(tr, pictureCell);
+    append(tr, fullNameCell);
+    append(tr, hourValueCell);
+    append(tr, hoursWorkedCell);
     append(tr, actionsCell);
 
     append(tbody, tr);

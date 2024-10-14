@@ -6,27 +6,92 @@ import { printTable } from "./utils/table.js";
 const url = "https://randomuser.me/api/?results=10";
 
 const container = document.getElementById("main");
-console.log(container);
 
-const storage = readLocalStorage("random users");
-console.log(storage !== null);
+const btnGroupList = document.getElementById("btn_group_list");
+const btnGroupClean = document.getElementById("btn_group_clean");
+const btnGroupSeeStatistics = document.getElementById(
+  "btn_group_see_statistics"
+);
+
+const statisticAlert = document.getElementById("statistic_alert");
+
+btnGroupList.addEventListener("click", list);
+btnGroupClean.addEventListener("click", clean);
+btnGroupSeeStatistics.addEventListener("click", calculate);
+
+statisticAlert.hidden = true;
+
+const storage = readLocalStorage("employees");
 
 if (storage === null) {
-  call(url)
-    .then((users) => format(users))
-    .then((users) => {
-      if (users) {
-        const stringified = JSON.stringify(users);
-        setLocalStorage("random users", stringified);
-      }
-    })
-    .catch((err) => {
-      alert("Ha ocurrido un error");
-      console.error(err);
-    });
+  sendRequest();
+} else {
+  checkStorage();
 }
 
-const storaged = readLocalStorage("random users");
-const jsonList = JSON.parse(storaged);
+async function sendRequest() {
+  try {
+    const employees = await call(url);
+    const formattedEmployees = format(employees);
 
-printTable(container, jsonList);
+    if (formattedEmployees) {
+      const stringified = JSON.stringify(formattedEmployees);
+      setLocalStorage("employees", stringified);
+      checkStorage();
+    }
+  } catch (error) {
+    alert("Ha ocurrido un error");
+    console.error(error);
+  }
+}
+
+function checkStorage() {
+  const storaged = readLocalStorage("employees");
+
+  if (storaged !== null) {
+    const jsonList = JSON.parse(storaged);
+
+    printTable(container, jsonList);
+
+    toggleButtons(true);
+  } else {
+    toggleButtons(false);
+  }
+}
+
+function toggleButtons(isStorageAvailable) {
+  btnGroupList.disabled = isStorageAvailable;
+  btnGroupClean.hidden = !isStorageAvailable;
+  btnGroupSeeStatistics.hidden = !isStorageAvailable;
+}
+
+function list() {
+  sendRequest();
+}
+
+function clean() {
+  localStorage.removeItem("employees");
+  container.innerHTML = "";
+
+  statisticAlert.hidden = true;
+
+  toggleButtons(false);
+}
+
+function calculate() {
+  const employees = readLocalStorage("employees");
+
+  const jsonList = JSON.parse(employees);
+  let total = 0;
+  for (let i = 0; i < jsonList.length; i++) {
+    let salary = jsonList[i].hoursWorked * jsonList[i].hourValue;
+
+    total += salary;
+  }
+
+  statisticAlert.hidden = false;
+
+  document.getElementById(
+    "statistic_result"
+  ).innerHTML = `El promedio es: $${total}`;
+}
