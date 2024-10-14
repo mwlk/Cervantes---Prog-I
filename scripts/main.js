@@ -6,13 +6,11 @@ import { printTable } from "./utils/table.js";
 const url = "https://randomuser.me/api/?results=10";
 
 const container = document.getElementById("main");
-
 const btnGroupList = document.getElementById("btn_group_list");
 const btnGroupClean = document.getElementById("btn_group_clean");
 const btnGroupSeeStatistics = document.getElementById(
   "btn_group_see_statistics"
 );
-
 const statisticAlert = document.getElementById("statistic_alert");
 
 btnGroupList.addEventListener("click", list);
@@ -50,9 +48,7 @@ function checkStorage() {
 
   if (storaged !== null) {
     const jsonList = JSON.parse(storaged);
-
     printTable(container, jsonList);
-
     toggleButtons(true);
   } else {
     toggleButtons(false);
@@ -72,26 +68,20 @@ function list() {
 function clean() {
   localStorage.removeItem("employees");
   container.innerHTML = "";
-
   statisticAlert.hidden = true;
-
   toggleButtons(false);
 }
 
 function calculate() {
   const employees = readLocalStorage("employees");
-
   const jsonList = JSON.parse(employees);
-  let total = 0;
-  for (let i = 0; i < jsonList.length; i++) {
-    let salary = jsonList[i].hoursWorked * jsonList[i].hourValue;
 
-    total += salary;
-  }
+  const total = jsonList.reduce((acc, employee) => {
+    return acc + employee.hoursWorked * employee.hourValue;
+  }, 0);
 
   statisticAlert.hidden = false;
-
   document.getElementById(
     "statistic_result"
-  ).innerHTML = `El promedio es: $${total}`;
+  ).innerHTML = `El total es: $${total}`;
 }
