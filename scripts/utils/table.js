@@ -1,6 +1,8 @@
 import { append, createNode } from "./dom.js";
 
 export function printTable(container, list) {
+  container.innerHTML = "";
+
   let table = createNode("table");
 
   //! bootstrap table styles
@@ -9,7 +11,6 @@ export function printTable(container, list) {
     "table-striped",
     "table-bordered",
     "table-hover",
-    // "table-dark"
     "glass"
   );
 
@@ -73,25 +74,14 @@ export function printTable(container, list) {
     // Create action buttons
     let editButton = createNode("button");
     editButton.innerHTML = "Ver Detalle";
-    editButton.classList.add(
-      "btn",
-      "btn-secondary",
-      "btn-sm",
-      "mb-3",
-      "w-100"
-    );
+    editButton.classList.add("btn", "btn-secondary", "btn-sm", "mb-3", "w-100");
     editButton.onclick = function () {
       alert(`Detalle: ${data.first} ${data.last}`);
     };
 
     let deleteButton = createNode("button");
     deleteButton.innerHTML = "Eliminar";
-    deleteButton.classList.add(
-      "btn",
-      "btn-outline-danger",
-      "btn-sm",
-      "w-100"
-    );
+    deleteButton.classList.add("btn", "btn-outline-danger", "btn-sm", "w-100");
     deleteButton.onclick = function () {
       alert(`Eliminar Usuario: ${data.id}?`);
     };

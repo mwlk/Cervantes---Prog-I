@@ -2,11 +2,10 @@ import { readLocalStorage, setLocalStorage } from "./utils/local-storage.js";
 import { call } from "./utils/calls.js";
 import { format } from "./utils/format.js";
 import { printTable } from "./utils/table.js";
-import { loadForm } from "./utils/loadForm.js";
 import { calculate } from "./operations/calculate.js";
 import { clean } from "./operations/clean.js";
 import { toggleButtons } from "./operations/toggle.js";
-import { newEmployee } from "./operations/newEmployee.js";
+import { newEmployee } from "./operations/newEmployee.js"; // Importación de la nueva función
 
 const url = "https://randomuser.me/api/?results=10";
 
@@ -18,15 +17,10 @@ const btnGroupSeeStatistics = document.getElementById(
   "btn_group_see_statistics"
 );
 
-loadForm(
-  btnGroupAdd,
-  "../../forms/employees/new/new.html",
-  "form_new_employee"
-);
-
 btnGroupList.addEventListener("click", list);
 btnGroupClean.addEventListener("click", clean);
 btnGroupSeeStatistics.addEventListener("click", calculate);
+
 btnGroupAdd.addEventListener("click", newEmployee);
 
 const storage = readLocalStorage("employees");
