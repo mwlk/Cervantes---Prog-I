@@ -1,12 +1,5 @@
 body {
   height: auto; /* Esto puede permanecer si necesitas que el contenido ajuste la altura */
-  /* background: rgb(2, 0, 36);
-  background: linear-gradient(
-    40deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(13, 13, 140, 0.47111344537815125) 92%,
-    rgba(0, 212, 255, 1) 100%
-  ); */
   background-size: cover; /* Asegúrate de que el fondo cubra toda la pantalla */
   background-repeat: no-repeat; /* Evita que el fondo se repita */
   min-height: 100vh; /* Asegúrate de que el cuerpo tenga al menos la altura de la ventana */
