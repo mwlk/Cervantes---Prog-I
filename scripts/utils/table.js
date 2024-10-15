@@ -1,4 +1,6 @@
 import { append, createNode } from "./dom.js";
+import { detail } from "./local-storage.js";
+import { loadModal } from "./loadModal.js";
 
 export function printTable(container, list) {
   container.innerHTML = "";
@@ -72,11 +74,18 @@ export function printTable(container, list) {
     hoursWorkedCell.innerHTML = data.hoursWorked;
 
     // Create action buttons
-    let editButton = createNode("button");
-    editButton.innerHTML = "Ver Detalle";
-    editButton.classList.add("btn", "btn-secondary", "btn-sm", "mb-3", "w-100");
-    editButton.onclick = function () {
-      alert(`Detalle: ${data.first} ${data.last}`);
+    let detailButton = createNode("button");
+    detailButton.innerHTML = "Ver Detalle";
+    detailButton.classList.add(
+      "btn",
+      "btn-secondary",
+      "btn-sm",
+      "mb-3",
+      "w-100"
+    );
+    detailButton.onclick = function () {
+      // alert(`Detalle: ${data.first} ${data.last}`);
+      showDetailModal("employees", data.id);
     };
 
     let deleteButton = createNode("button");
@@ -87,7 +96,7 @@ export function printTable(container, list) {
     };
 
     // Append buttons to actionsCell
-    append(actionsCell, editButton);
+    append(actionsCell, detailButton);
     append(actionsCell, deleteButton);
 
     append(tr, indexCell);
@@ -100,4 +109,27 @@ export function printTable(container, list) {
     append(tbody, tr);
   });
   append(container, table);
+}
+
+function showDetailModal(key, id) {
+  const employee = detail(key, id); // Obtenemos el detalle del empleado usando la función detail
+
+  if (employee) {
+    // Cargar el modal desde el archivo separado
+    loadModal(
+      "../../forms/employees/detail/detail.html",
+      "modal_container"
+    ).then(() => {
+      // Una vez cargado, rellenamos los datos
+      document.getElementById("employee-name").textContent = employee.first;
+      document.getElementById("employee-surname").textContent = employee.last;
+      document.getElementById(
+        "employee-hour-value"
+      ).textContent = `$${employee.hourValue}`;
+      document.getElementById("employee-hours-worked").textContent =
+        employee.hoursWorked;
+    });
+  } else {
+    console.error("Empleado no encontrado");
+  }
 }
