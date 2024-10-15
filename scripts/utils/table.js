@@ -1,5 +1,5 @@
 import { append, createNode } from "./dom.js";
-import { detail } from "./local-storage.js";
+import { detail, remove } from "./local-storage.js";
 import { loadModal } from "./loadModal.js";
 
 export function printTable(container, list) {
@@ -84,7 +84,7 @@ export function printTable(container, list) {
       "w-100"
     );
     detailButton.onclick = function () {
-      // alert(`Detalle: ${data.first} ${data.last}`);
+      // alert(`Detalle: ${data.first} ${data.last}`);x
       showDetailModal("employees", data.id);
     };
 
@@ -92,7 +92,9 @@ export function printTable(container, list) {
     deleteButton.innerHTML = "Eliminar";
     deleteButton.classList.add("btn", "btn-outline-danger", "btn-sm", "w-100");
     deleteButton.onclick = function () {
-      alert(`Eliminar Usuario: ${data.id}?`);
+      // alert(`Eliminar Usuario: ${data.id}?`);
+      const container = document.getElementById("main");
+      remove("employees", data.id, container);
     };
 
     // Append buttons to actionsCell
@@ -112,15 +114,13 @@ export function printTable(container, list) {
 }
 
 function showDetailModal(key, id) {
-  const employee = detail(key, id); // Obtenemos el detalle del empleado usando la función detail
+  const employee = detail(key, id);
 
   if (employee) {
-    // Cargar el modal desde el archivo separado
     loadModal(
       "../../forms/employees/detail/detail.html",
       "modal_container"
     ).then(() => {
-      // Una vez cargado, rellenamos los datos
       document.getElementById("employee-name").textContent = employee.first;
       document.getElementById("employee-surname").textContent = employee.last;
       document.getElementById(

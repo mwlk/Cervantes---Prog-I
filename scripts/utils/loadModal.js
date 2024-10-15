@@ -8,7 +8,6 @@ export async function loadModal(modalUrl, targetContainerId) {
     const targetContainer = document.getElementById(targetContainerId);
     targetContainer.innerHTML = html;
 
-    // Inicializa el modal de Bootstrap
     const modalElement = document.getElementById("detailModal");
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement); // Asegúrate de que Bootstrap JS esté cargado
