@@ -1,21 +1,33 @@
-import { readLocalStorage, setLocalStorage } from "./utils/locale-storage.js";
+import { readLocalStorage, setLocalStorage } from "./utils/local-storage.js";
 import { call } from "./utils/calls.js";
 import { format } from "./utils/format.js";
 import { printTable } from "./utils/table.js";
+import { loadForm } from "./utils/loadForm.js";
+import { calculate } from "./operations/calculate.js";
+import { clean } from "./operations/clean.js";
+import { toggleButtons } from "./operations/toggle.js";
+import { newEmployee } from "./operations/newEmployee.js";
 
 const url = "https://randomuser.me/api/?results=10";
 
 const container = document.getElementById("main");
+const btnGroupAdd = document.getElementById("btn_group_add");
 const btnGroupList = document.getElementById("btn_group_list");
 const btnGroupClean = document.getElementById("btn_group_clean");
 const btnGroupSeeStatistics = document.getElementById(
   "btn_group_see_statistics"
 );
-const statisticAlert = document.getElementById("statistic_alert");
+
+loadForm(
+  btnGroupAdd,
+  "../../forms/employees/new/new.html",
+  "form_new_employee"
+);
 
 btnGroupList.addEventListener("click", list);
 btnGroupClean.addEventListener("click", clean);
 btnGroupSeeStatistics.addEventListener("click", calculate);
+btnGroupAdd.addEventListener("click", newEmployee);
 
 const storage = readLocalStorage("employees");
 
@@ -53,35 +65,7 @@ function checkStorage() {
   }
 }
 
-function toggleButtons(isStorageAvailable) {
-  btnGroupList.disabled = isStorageAvailable;
-  btnGroupClean.hidden = !isStorageAvailable;
-  btnGroupSeeStatistics.hidden = !isStorageAvailable;
-}
-
 function list() {
   btnGroupList.disabled = true;
   sendRequest();
-}
-
-function clean() {
-  localStorage.removeItem("employees");
-  container.innerHTML = "";
-  statisticAlert.style.display = "none";
-  toggleButtons(false);
-}
-
-function calculate() {
-  const employees = readLocalStorage("employees");
-  const jsonList = JSON.parse(employees);
-
-  const total = jsonList.reduce((acc, employee) => {
-    return acc + employee.hoursWorked * employee.hourValue;
-  }, 0);
-
-  statisticAlert.style.display = "block";
-
-  document.getElementById(
-    "statistic_result"
-  ).innerHTML = `El total es: $${total}`;
 }

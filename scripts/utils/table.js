@@ -9,7 +9,8 @@ export function printTable(container, list) {
     "table-striped",
     "table-bordered",
     "table-hover",
-    "table-dark"
+    // "table-dark"
+    "glass"
   );
 
   let thead = createNode("thead");
@@ -71,21 +72,26 @@ export function printTable(container, list) {
 
     // Create action buttons
     let editButton = createNode("button");
-    editButton.innerHTML = "Editar";
+    editButton.innerHTML = "Ver Detalle";
     editButton.classList.add(
       "btn",
-      "btn-outline-primary",
+      "btn-secondary",
       "btn-sm",
       "mb-3",
       "w-100"
     );
     editButton.onclick = function () {
-      alert(`Editar ${data.first} ${data.last}`);
+      alert(`Detalle: ${data.first} ${data.last}`);
     };
 
     let deleteButton = createNode("button");
     deleteButton.innerHTML = "Eliminar";
-    deleteButton.classList.add("btn", "btn-outline-danger", "btn-sm", "w-100");
+    deleteButton.classList.add(
+      "btn",
+      "btn-outline-danger",
+      "btn-sm",
+      "w-100"
+    );
     deleteButton.onclick = function () {
       alert(`Eliminar Usuario: ${data.id}?`);
     };
