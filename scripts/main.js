@@ -17,8 +17,6 @@ btnGroupList.addEventListener("click", list);
 btnGroupClean.addEventListener("click", clean);
 btnGroupSeeStatistics.addEventListener("click", calculate);
 
-statisticAlert.hidden = true;
-
 const storage = readLocalStorage("employees");
 
 if (storage === null) {
@@ -62,13 +60,14 @@ function toggleButtons(isStorageAvailable) {
 }
 
 function list() {
+  btnGroupList.disabled = true;
   sendRequest();
 }
 
 function clean() {
   localStorage.removeItem("employees");
   container.innerHTML = "";
-  statisticAlert.hidden = true;
+  statisticAlert.style.display = "none";
   toggleButtons(false);
 }
 
@@ -80,7 +79,8 @@ function calculate() {
     return acc + employee.hoursWorked * employee.hourValue;
   }, 0);
 
-  statisticAlert.hidden = false;
+  statisticAlert.style.display = "block";
+
   document.getElementById(
     "statistic_result"
   ).innerHTML = `El total es: $${total}`;
