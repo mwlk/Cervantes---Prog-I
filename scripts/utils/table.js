@@ -10,10 +10,10 @@ export function printTable(container, list) {
   //! bootstrap table styles
   table.classList.add(
     "table",
-    "table-striped",
     "table-bordered",
     "table-hover",
-    "glass"
+    "glass",
+    "text-light"
   );
 
   let thead = createNode("thead");
@@ -75,29 +75,26 @@ export function printTable(container, list) {
 
     // Create action buttons
     let detailButton = createNode("button");
-    detailButton.innerHTML = "Ver Detalle";
+    detailButton.innerHTML = `<i class="bi bi-search"></i> Ver Detalle`;
     detailButton.classList.add(
       "btn",
-      "btn-secondary",
+      "btn-outline-dark",
       "btn-sm",
       "mb-3",
       "w-100"
     );
     detailButton.onclick = function () {
-      // alert(`Detalle: ${data.first} ${data.last}`);x
       showDetailModal("employees", data.id);
     };
 
     let deleteButton = createNode("button");
-    deleteButton.innerHTML = "Eliminar";
+    deleteButton.innerHTML = `<i class="bi bi-trash"></i> Eliminar`;
     deleteButton.classList.add("btn", "btn-outline-danger", "btn-sm", "w-100");
     deleteButton.onclick = function () {
-      // alert(`Eliminar Usuario: ${data.id}?`);
       const container = document.getElementById("main");
       remove("employees", data.id, container);
     };
 
-    // Append buttons to actionsCell
     append(actionsCell, detailButton);
     append(actionsCell, deleteButton);
 
@@ -121,13 +118,18 @@ function showDetailModal(key, id) {
       "../../forms/employees/detail/detail.html",
       "modal_container"
     ).then(() => {
-      document.getElementById("employee-name").textContent = employee.first;
-      document.getElementById("employee-surname").textContent = employee.last;
+      const { first, last, hourValue, hoursWorked } = employee;
+
+      document.getElementById("employee-name").textContent = first;
+      document.getElementById("employee-surname").textContent = last;
       document.getElementById(
         "employee-hour-value"
-      ).textContent = `$${employee.hourValue}`;
+      ).textContent = `$${hourValue}`;
       document.getElementById("employee-hours-worked").textContent =
-        employee.hoursWorked;
+        hoursWorked;
+      document.getElementById("employee-salary").textContent = `${
+        hoursWorked * hourValue
+      }`;
     });
   } else {
     console.error("Empleado no encontrado");

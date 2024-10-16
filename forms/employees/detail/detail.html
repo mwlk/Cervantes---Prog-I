@@ -2,20 +2,27 @@
     <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
+
                 <div class="modal-header">
                     <h5 class="modal-title" id="detailModalLabel">Detalle del Empleado</h5>
                     <button type="button" class="btn btn-dark btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
+
                 <div class="modal-body">
                     <p><strong>Nombre:</strong> <span id="employee-name"></span></p>
                     <p><strong>Apellido:</strong> <span id="employee-surname"></span></p>
                     <p><strong>Valor Hora:</strong> <span id="employee-hour-value"></span></p>
                     <p><strong>Horas Trabajadas:</strong> <span id="employee-hours-worked"></span></p>
+                    <br>
+
                 </div>
-                <div class="modal-footer">
+
+                <div class="modal-footer d-flex justify-content-between">
+                    <p class="mb-0 text-start"><strong>Salario:</strong> <span id="employee-salary"></span></p>
                     <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Cerrar</button>
                 </div>
+
             </div>
         </div>
     </div>
