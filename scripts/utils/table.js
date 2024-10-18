@@ -17,6 +17,26 @@ export function printTable(container, list) {
   );
 
   let thead = createNode("thead");
+  thead.classList.add("thead-main");
+
+  let theadResponsive = createNode("thead");
+  theadResponsive.classList.add(
+    "thead-responsive",
+    "text-center",
+    "text-light"
+  );
+
+  let trResponsive = createNode("tr");
+  let thResponsive = createNode("th");
+
+  thResponsive.setAttribute("colspan", "6")
+  thResponsive.classList.add("text-center");
+  thResponsive.innerHTML = "Listado de Empleados";
+
+  append(trResponsive, thResponsive);
+
+  append(theadResponsive, trResponsive);
+
   let tbody = createNode("tbody");
   let tr = createNode("tr");
 
@@ -40,6 +60,7 @@ export function printTable(container, list) {
 
   append(thead, tr);
   append(table, thead);
+  append(table, theadResponsive);
   append(table, tbody);
 
   list.map(function (data) {

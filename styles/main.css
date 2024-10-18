@@ -73,3 +73,27 @@ button {
 .table td {
   border: none;
 }
+
+.thead-responsive {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  #btn_group .col {
+    margin-bottom: 0.75rem;
+  }
+
+  thead {
+    display: none;
+  }
+  .table th,
+  .table td {
+    display: inline-block;
+    width: auto;
+  }
+
+  .thead-responsive {
+    display: block;
+    background-color: gray;
+  }
+}
